@@ -6,9 +6,7 @@ Description: Tools needed to compute stellar activity indicators.
 This includes getRV, bisector, gauss and bigauss profiles.
 
 Last updated: 18/01/2021
-"""
-
-
+    """
 import numpy as np
 from scipy.optimize import curve_fit
 from scipy.interpolate import InterpolatedUnivariateSpline

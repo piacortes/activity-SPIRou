@@ -6,7 +6,7 @@ Description: Functions to compute stellar activity indicators from a given CCF.
 List of indicators: BIS, Vspan, BiGauss, Vasy.
 
 Last updated: 18/01/2021
-"""
+    """
 import numpy as np
 from scipy.optimize import curve_fit
 from scipy.interpolate import CubicSpline

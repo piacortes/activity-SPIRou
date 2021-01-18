@@ -6,7 +6,7 @@ Description: Routine to compute stellar activity indicators in SPIRou reduced da
 Currently working BIS, VSpan and BiGaussian
 
 Last updated: 18/01/2021
-"""
+    """
 from activity_indicators import *
 from tools import *
 import glob
