@@ -30,7 +30,7 @@ def getBIS(rv,ccf, plus=False, minus=False):
         print("Option not supported. Proceding to compute standard BIS.")
         level = [0.1, 0.4, 0.6, 0.9]
 
-    depth, bisector_line, wdth = bisector(rv,ccf)
+    depth, bisector_line = bisector(rv,ccf)
     topBisector = bisector_line[(depth>level[2]) & (depth<level[3])]
 
     vTop = np.mean(topBisector)*1000
