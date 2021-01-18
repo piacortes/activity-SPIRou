@@ -50,10 +50,10 @@ def getVSpan(rv, ccf):
 
     # Min of the CCF is good proxy of the real RV
     imin = int(np.argmin(ccf))
-
+    rv_0 = rv[imin]
     # Fit gaussian to obtain RV center and sigma of CCF
     pInit , cov = curve_fit(gauss, rv, ccf,
-                    p0=[1.0,imin,2.0, np.max(ccf)])
+                    p0=[1.0,rv_0,2.0, np.max(ccf)])
     rv_center = pInit[1]
 
     # The 0.5 factor was included to obtain consistent results with BIS
@@ -95,16 +95,18 @@ def getBiGauss(rv, ccf):
     ccf = np.array(ccf)
 
     imin = int(np.argmin(ccf))
+    rv_0 = rv[imin
+    ]
     fakeVel = np.arange(rv[0], rv[-1], 0.00001)
 
     pBiGauss, cov = curve_fit(biGauss, rv, ccf,
-                    p0=[(np.max(ccf)-np.min(ccf)), imin, 2.0, np.max(ccf), 0.1])
+                    p0=[(np.max(ccf)-np.min(ccf)), rv_0, 2.0, np.max(ccf), 0.1])
 
     fitBiGauss = biGauss(fakeVel, pBiGauss[0], pBiGauss[1], pBiGauss[2], pBiGauss[3], pBiGauss[4])
     rvBiGauss = fakeVel[np.argmin(fitBiGauss)]*1000
 
     pGauss , cov = curve_fit(gauss, rv, ccf,
-                    p0=[(np.max(ccf)-np.min(ccf)),imin,2.0,np.max(ccf)])
+                    p0=[(np.max(ccf)-np.min(ccf)),rv_0,2.0,np.max(ccf)])
 
     fitGauss = gauss(fakeVel, pGauss[0], pGauss[1], pGauss[2], pGauss[3])
     rvGauss = fakeVel[np.argmin(fitGauss)]*1000
