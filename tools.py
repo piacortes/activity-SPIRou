@@ -73,7 +73,7 @@ def biGauss(x,amp,x0,sigma,cont,A):
 
     """
     return np.piecewise(x,
-                        [x<cent, x>=cent],
+                        [x<x0, x>=x0],
                          [lambda x: amp * np.exp(-0.5 * ((x-x0)/(sigma*(1-A)))**2) + cont,
                           lambda x: amp * np.exp(-0.5 * ((x-x0)/(sigma*(1+A)))**2) + cont])
 
