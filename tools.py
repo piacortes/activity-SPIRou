@@ -79,8 +79,8 @@ def biGauss(x,amp,x0,sigma,cont,A):
 
 
 def bisector(rv, ccf, low_high_cut = 0.1):
-""" Computes the bisector line of a function of the depth of a given CCF.
-Based on Etienne Artigau's (UdM) version.
+    """ Computes the bisector line of a function of the depth of a given CCF.
+        Based on Etienne Artigau's (UdM) version.
 
     Parameters:
     rv (array): array of radial velocities
@@ -90,7 +90,7 @@ Based on Etienne Artigau's (UdM) version.
     Returns:
     array: depth
     array: bisector
-"""
+    """
     # get minima
     imin = int(np.argmin(ccf))
 
