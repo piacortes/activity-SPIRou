@@ -83,4 +83,4 @@ def get_activity_ind(star, mask, path_files, doplot=False):
         ax[4].plot(tbl['MJDMID'], tbl['BIGAUSS'], '.', color='black')
         ax[4].set_ylabel('BiGaussian [m/s]')
         plt.savefig(star+"_activity_timeseries.png",bbox_inches='tight')
-        plt.show()
+        #plt.show()
