@@ -7,7 +7,7 @@ Currently working indicators:
 * BiGauss (Figueira et al. 2013).
 
 ## How to use it
-```
+```python
 from activity-spirou import *
 
 path = '/net/GSP/users/pcortes/DATA/GL205/*/*tcorr*_m2_weighted_rv_10_AB.fits'
