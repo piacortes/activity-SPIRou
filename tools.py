@@ -30,8 +30,13 @@ def getRV(rv,ccf):
     rv_p0 = rv[imin]
 
     # Define blue and red wings of the CCF where the derivative changes sign
-    width_blue = imin - np.max(np.where(np.gradient(ccf[0:imin])>0))
-    width_red = np.min(np.where(np.gradient(ccf[imin:])<0))
+    try:
+        width_blue = imin - np.max(np.where(np.gradient(ccf[0:imin])>0))
+        width_red = np.min(np.where(np.gradient(ccf[imin:])<0))
+    except Exception as e:
+        print(e)
+        rv_target = np.nan
+        return rv_target
 
     width = int(np.min([width_blue, width_red]))
 
