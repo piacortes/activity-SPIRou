@@ -8,7 +8,7 @@ Currently working indicators:
 
 ## How to use it
 ```python
-from activity-spirou import *
+from activity_spirou import *
 
 path = '/net/GSP/users/pcortes/DATA/GL205/*/*tcorr*_m2_weighted_rv_10_AB.fits'
 get_activity_ind(star='Gl205', mask='M2_weighted_RV_10', path_files=path, doplot=True)     
