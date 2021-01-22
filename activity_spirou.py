@@ -41,10 +41,22 @@ def get_activity_ind(star, mask, path_files, doplot=False):
         ccf = ccf_tbl['COMBINED'] #combined CCF
 
         # Compute RV and indicators
-        tbl['RV_GAUSS'][i] = getRV(ccf_RV, ccf)
-        tbl['BIS'][i] = getBIS(ccf_RV, ccf)
-        tbl['VSPAN'][i] = getVSpan(ccf_RV, ccf)
-        tbl['BIGAUSS'][i] = getBiGauss(ccf_RV, ccf)
+        try:
+            tbl['RV_GAUSS'][i] = getRV(ccf_RV, ccf)
+        except Exception as e:
+            tbl['RV_GAUSS'][i] = np.nan
+        try:
+            tbl['BIS'][i] = getBIS(ccf_RV, ccf)
+        except Exception as e:
+            tbl['BIS'][i] = np.nan
+        try:
+            tbl['VSPAN'][i] = getVSpan(ccf_RV, ccf)
+        except Exception as e:
+            tbl['VSPAN'][i] = np.nan
+        try:
+            tbl['BIGAUSS'][i] = getBiGauss(ccf_RV, ccf)
+        except Exception as e:
+            tbl['BIGAUSS'][i] = np.nan
 
         # Add keywords values from header
         hdr = pf.getheader(files[i],ext = 1)
