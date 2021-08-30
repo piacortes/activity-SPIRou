@@ -5,11 +5,13 @@ Laboratoire d'Astropysique de Marseille
 Description: Tools needed to compute stellar activity indicators.
 This includes getRV, bisector, gauss and bigauss profiles.
 
-Last updated: 18/01/2021
+Last updated: 30/08/2021
     """
 import numpy as np
 from scipy.optimize import curve_fit
 from scipy.interpolate import InterpolatedUnivariateSpline
+from uncertainties import ufloat
+from uncertainties.umath import *
 
 def getRV(rv,ccf):
     """ Computes RV using a gauss profile fitting on a given CCF
@@ -30,13 +32,9 @@ def getRV(rv,ccf):
     rv_p0 = rv[imin]
 
     # Define blue and red wings of the CCF where the derivative changes sign
-    try:
-        width_blue = imin - np.max(np.where(np.gradient(ccf[0:imin])>0))
-        width_red = np.min(np.where(np.gradient(ccf[imin:])<0))
-    except Exception as e:
-        print(e)
-        rv_target = np.nan
-        return rv_target
+    width_blue = imin - np.max(np.where(np.gradient(ccf[0:imin])>0))
+    width_red = np.min(np.where(np.gradient(ccf[imin:])<0))
+
 
     width = int(np.min([width_blue, width_red]))
 
@@ -60,6 +58,14 @@ def getRV(rv,ccf):
 def gauss(x,amp, x0,sigma, cont):
     """ Obtain inverted Gaussian profile of a given set of parameters """
     y = - amp * np.exp(-0.5*(x-x0)**2/sigma**2) +cont
+    return y
+
+def gauss_with_err(x, amp, x0, sigma, cont):
+    amp = ufloat(amp[0], amp[1])
+    x0 = ufloat(x0[0], x0[1])
+    sigma = ufloat(sigma[0], sigma[1])
+    cont = ufloat(cont[0], cont[1])
+    y = - amp * exp(-0.5*(x-x0)**2/sigma**2) +cont
     return y
 
 def biGauss(x,amp,x0,sigma,cont,A):
