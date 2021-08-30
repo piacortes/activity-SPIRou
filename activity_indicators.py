@@ -125,7 +125,7 @@ def getBiGauss(rv, ccf):
     deltaV_err = np.sqrt(pBiGauss_err[1]**2 + pGauss_err[1]**2)*1000
     #deltaV = rvBiGauss - rvGauss
 
-    return deltaV
+    return deltaV, deltaV_err
 
 def getBISpol(path_ccf):
     level = [0.2, 0.4, 0.55, 0.8]
