@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 def get_activity_ind(star, mask, path_files, doplot=False):
 
-    keywords = ['DATE-OBS','MJDMID','BERV','EXTSN035','AIRMASS',
+    keywords = ['EXPNUM','DATE-OBS','MJDMID','BERV','EXTSN035','AIRMASS',
                 'EXPTIME', 'CCFMFWHM', 'RV_CORR', 'RV_OBJ']
 
     files = glob.glob(path_files)
@@ -25,17 +25,19 @@ def get_activity_ind(star, mask, path_files, doplot=False):
     tbl = Table()
 
     tbl['FILES'] = files
-    tbl['ODOMETER'] = np.zeros_like(tbl, dtype='U7')
-    for i in range(len(tbl)):
-        tbl['ODOMETER'][i] = tbl['FILES'][i].split('/')[-1].split('o')[0]
+    #tbl['ODOMETER'] = np.zeros_like(tbl, dtype='U7')
 
     tbl['RV_GAUSS'] = np.zeros_like(files,dtype = float) # RV from gaussian
     tbl['BIS'] = np.zeros_like(files, dtype=float)
+    tbl['BIS_ERR'] = np.zeros_like(files, dtype=float)
     tbl['VSPAN'] = np.zeros_like(files, dtype=float)
+    tbl['VSPAN_ERR'] = np.zeros_like(files, dtype=float)
     tbl['BIGAUSS'] = np.zeros_like(files, dtype=float)
+    tbl['BIGAUSS_ERR'] = np.zeros_like(files, dtype=float)
 
     # get CCF and RV arrays
     for i in (range(len(files))):
+
         ccf_tbl = pf.getdata(files[i])
         ccf_RV = ccf_tbl['RV'] #velocity array
         ccf = ccf_tbl['COMBINED'] #combined CCF
@@ -46,17 +48,17 @@ def get_activity_ind(star, mask, path_files, doplot=False):
         except Exception as e:
             tbl['RV_GAUSS'][i] = np.nan
         try:
-            tbl['BIS'][i] = getBIS(ccf_RV, ccf)
+            tbl['BIS'][i], tbl['BIS_ERR'][i] = getBIS(ccf_RV, ccf)
         except Exception as e:
-            tbl['BIS'][i] = np.nan
+            tbl['BIS'][i], tbl['BIS_ERR'][i] = np.nan, np.nan
         try:
-            tbl['VSPAN'][i] = getVSpan(ccf_RV, ccf)
+            tbl['VSPAN'][i], tbl['VSPAN_ERR'][i] = getVSpan(ccf_RV, ccf)
         except Exception as e:
-            tbl['VSPAN'][i] = np.nan
+            tbl['VSPAN'][i], tbl['VSPAN_ERR'][i]  = np.nan, np.nan
         try:
-            tbl['BIGAUSS'][i] = getBiGauss(ccf_RV, ccf)
+            tbl['BIGAUSS'][i], tbl['BIGAUSS_ERR'][i] = getBiGauss(ccf_RV, ccf)
         except Exception as e:
-            tbl['BIGAUSS'][i] = np.nan
+            tbl['BIGAUSS'][i], tbl['BIGAUSS_ERR'][i] = np.nan, np.nan
 
         # Add keywords values from header
         hdr = pf.getheader(files[i],ext = 1)
